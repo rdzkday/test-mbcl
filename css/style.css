@@ -17,7 +17,7 @@
   --danger-bg: #fbe3e7;
   --danger-fg: #a8233b;
   --hi: #c4304a;
-  --mid: #946000;
+  --mid: #805300;
   --lo: #147048;
   --shadow: 0 1px 2px rgba(28, 34, 80, .06), 0 6px 16px -8px rgba(28, 34, 80, .14);
   --body-bg: var(--bg);
@@ -32,15 +32,15 @@
   --track: #3b3b40;
   --line: #4b4b51;
   --text: #f3f3f6;
-  --muted: #a3a3ae;
-  --accent: #5a6bf2;
+  --muted: #b0b0ba;
+  --accent: #5463ee;
   --accent-text: #a1abff;
   --break: #3db9a2;
   --danger: #ef6b78;
   --danger-bg: #5a3238;
   --danger-fg: #ffd3d7;
   --hi: #ef6b78;
-  --mid: #e0a944;
+  --mid: #f5c970;
   --lo: #45b884;
   --shadow: none;
   color-scheme: dark;
@@ -267,7 +267,7 @@ h2 { margin: 0; font-size: 15px; font-weight: 700; }
 .alarm div { flex: 1; min-width: 0; }
 .alarm b { display: block; }
 .alarm span { font-size: 13px; opacity: .92; }
-.alarm button { min-height: 44px; padding: 0 14px; border-radius: 12px; background: rgba(255, 255, 255, .22); font-weight: 700; }
+.alarm button { min-height: 44px; padding: 0 14px; border-radius: 12px; background: rgba(0, 0, 0, .25); font-weight: 700; }
 .alarm[hidden], .toast[hidden] { display: none; }
 .toast {
   position: absolute; z-index: 30; left: 50%; transform: translateX(-50%); bottom: 92px; width: max-content; max-width: calc(100% - 32px);
