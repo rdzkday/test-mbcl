@@ -1,0 +1,14 @@
+{
+  "name": "pomodoro-fokus",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Pomodoro untuk deep work. HTML + CSS + JS murni, tanpa build.",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
