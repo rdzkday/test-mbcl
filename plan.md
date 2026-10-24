@@ -1,6 +1,6 @@
 # Plan: Pomodoro Fokus
 
-Status: Tahap 0–3 selesai. Tahap 4 (laporan) selesai. Tahap 5 menunggu keputusan Riki.
+Status: Tahap 0–4 selesai. Tahap 6 (pindah ke Next.js untuk Vercel) selesai di kode, belum dideploy. Tahap 5 menunggu keputusan Riki.
 Cara kerja: satu tahap per giliran. Selesai → lapor ke Riki → tunggu setuju → lanjut.
 
 ## Aturan main
@@ -60,3 +60,13 @@ Cara kerja: satu tahap per giliran. Selesai → lapor ke Riki → tunggu setuju 
 - Layar mati atau pindah app: alarm bisa telat atau tidak bunyi. Sisa waktu tetap benar saat kembali.
 - Data terikat ke satu browser di satu perangkat. Lagu perlu dipilih ulang di perangkat lain.
 - Tidak ada notifikasi push.
+
+## Tahap 6: Pindah ke Next.js (keputusan Riki: deploy ke Vercel)
+- [x] Next.js 16 (App Router) + React 19, versi dikunci.
+- [x] Logika lama dipindah apa adanya ke `src/pomo/`, dijalankan sekali di browser dari `src/components/PomoApp.js`.
+- [x] Tema dipasang sebelum halaman tampil (tanpa kilatan terang untuk pengguna tema Gelap).
+- [x] Service worker ditulis ulang untuk file build berhash; manifest dan ikon pindah ke `public/`.
+- [x] 29 tes yang sama hijau terhadap hasil `next build` (halaman statis, tanpa server function).
+- [ ] Deploy ke Vercel (butuh Riki: import repo, atau setuju Claude membuat proyek lewat konektor Vercel).
+- [ ] Uji di HP asli lewat alamat Vercel (`docs/uji-hp.md`).
+- [ ] Keputusan: tulis ulang tampilan jadi komponen React atau tetap seperti sekarang. Rekomendasi: tetap dulu, tulis ulang hanya kalau mau menambah fitur besar (mis. akun/sinkron). Alasannya: perilaku sudah terbukti, tulis ulang berisiko tanpa manfaat langsung buat pengguna.

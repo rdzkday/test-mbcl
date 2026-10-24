@@ -9,7 +9,7 @@ test('manifest valid dan ikon tersedia', async ({ page, request }) => {
   const res = await request.get(new URL(href, page.url()).href);
   expect(res.ok()).toBe(true);
   const m = await res.json();
-  expect(m).toMatchObject({ name: 'Pomodoro Fokus', display: 'standalone', start_url: './', scope: './' });
+  expect(m).toMatchObject({ name: 'Pomodoro Fokus', display: 'standalone', start_url: '/', scope: '/' });
   const sizes = m.icons.map((i) => i.sizes);
   expect(sizes).toEqual(expect.arrayContaining(['192x192', '512x512']));
   expect(m.icons.some((i) => i.purpose === 'maskable')).toBe(true);
@@ -36,7 +36,7 @@ test('jalan tanpa internet setelah dibuka sekali, data tetap ada', async ({ page
     const keys = await caches.keys();
     if (!keys.length) return 0;
     return (await (await caches.open(keys[0])).keys()).length;
-  })).toBeGreaterThanOrEqual(17);
+  })).toBeGreaterThanOrEqual(10);
   await page.reload(); // supaya halaman dikendalikan service worker
   await expect.poll(() => page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
 

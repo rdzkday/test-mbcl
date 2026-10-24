@@ -21,10 +21,3 @@ setInterval(tick, 250);
 idbGet().then(function (r) {
   if (r && r.blob) { setAudioBlob(r.blob); ui.songMeta = { name: r.name, size: r.size }; render(); }
 });
-
-/* PWA: service worker hanya jalan di https atau localhost */
-if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
-  window.addEventListener('load', function () {
-    navigator.serviceWorker.register('sw.js').catch(function () {});
-  });
-}

@@ -15,9 +15,11 @@ export default defineConfig({
     serviceWorkers: 'block'
   },
   projects: [{ name: 'chromium', use: { browserName: 'chromium' } }],
+  // Tes berjalan melawan hasil build produksi (sama dengan yang dipakai Vercel).
   webServer: process.env.BASE_URL ? undefined : {
-    command: 'node scripts/serve.mjs',
+    command: 'npm run build && npm run start',
     url: base,
-    reuseExistingServer: true
+    reuseExistingServer: true,
+    timeout: 180_000
   }
 });

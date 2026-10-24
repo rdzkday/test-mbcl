@@ -11,11 +11,11 @@ Aplikasi pomodoro untuk deep work. Pengguna menyusun to-do, memilih tugas untuk 
 
 ## 2. Status sekarang
 - Prototipe asli: satu file `index.html` (ada di cabang `main`, commit `ab5c259`). Referensi perilaku.
-- Sudah dipecah jadi proyek kecil: `index.html`, `css/`, `js/` (ES module, tanpa build). Perilaku sama dengan prototipe (tes yang sama lolos di keduanya).
+- Dipindah ke Next.js 16 (App Router) untuk deploy ke Vercel (keputusan Riki). Logika prototipe dipindah apa adanya ke `src/pomo/`. Perilaku sama (tes yang sama lolos di prototipe lama, versi modul, dan versi Next).
 - Tes otomatis Playwright (Chromium desktop): 29 tes hijau. Jalankan `npm test`.
 - PWA: manifest, ikon, service worker. Lolos cek installable dan uji offline di Chromium.
 - Belum diuji di HP asli (iPhone/Android). Panduan: `docs/uji-hp.md`.
-- Belum ada hosting HTTPS.
+- Belum dideploy ke Vercel.
 - Prototipe juga terbit sebagai artifact Claude, hanya untuk pratinjau.
 
 ## 3. Alur produk (6 langkah, jangan diubah)
@@ -50,18 +50,18 @@ Fase di kode: `idle → plan → select → focus → break → select`.
 - "Lama penyelesaian" = total detik timer fokus berjalan selama tugas itu ada di sesi dan belum selesai. Bukan selisih dari waktu dibuat.
 
 ## 5. Arsitektur
-- HTML + CSS + JS murni (ES module). Tanpa framework, tanpa build. Perlu server statis (`npm start`) karena ES module.
+- Next.js (App Router), halaman statis, tanpa server function dan tanpa env var. Layar digambar oleh JS murni di `src/pomo/` (bukan komponen React), dijalankan sekali di browser.
 - Data di browser: `localStorage` kunci `pomo.v1` (to-do, pengaturan, tema, log), `IndexedDB` db `pomo-media` (file lagu).
 - Timer menyimpan `endAt` (jam asli), bukan hitungan mundur per detik. Sisa waktu selalu dihitung dari jam perangkat.
 - Pengecekan tiap 250 ms + saat tab terlihat lagi. Layar diminta tetap menyala (Wake Lock) selama timer jalan.
 - Musik: elemen audio dari file pilihan. Tanpa lagu, nada beep dibuat lewat Web Audio. Audio "dibuka kuncinya" saat pengguna menekan tombol.
 - Tema lewat variabel CSS. Atribut `data-app-theme` di elemen root.
 - Drag urutan memakai pointer events dengan field `ord` di tiap tugas.
-- Modul: `util` (format, ikon), `state` (data, simpan, reset 05.00), `timer`, `audio`, `views`, `actions`, `drag`, `main`.
+- Modul di `src/pomo/`: `util` (format, ikon), `state` (data, simpan, reset 05.00), `timer`, `audio`, `views`, `actions`, `drag`, `main`.
 
 Model data tugas: `id, title, desc, pri(high|med|low), at, ord, done, doneAt, pomos, spent(detik), bring`.
 Model state: `tasks, settings{plan,cf,cb}, theme, pre, phase, timer{kind,total,status,remaining,endAt,segStart,brkMin}, sel, session, last, log, dayStart`.
-Jangan ubah bentuk data tanpa migrasi (lihat `load()` di `js/state.js`), supaya data pengguna lama tidak hilang.
+Jangan ubah bentuk data tanpa migrasi (lihat `load()` di `src/pomo/state.js`), supaya data pengguna lama tidak hilang.
 
 ## 6. Batasan yang sudah diketahui
 - Layar mati atau pindah app: halaman dibekukan HP, alarm bisa telat atau tidak bunyi. Sisa waktu tetap benar saat kembali.
@@ -73,15 +73,17 @@ Jangan ubah bentuk data tanpa migrasi (lihat `load()` di `js/state.js`), supaya 
    - Rekomendasi awal: validasi pemakaian di web dulu. Pindah ke native/Capacitor hanya kalau alarm yang andal saat layar mati memang dibutuhkan.
    - Tanyakan dulu: HP utama Riki iPhone atau Android? Dan apakah sudah punya akun developer?
 2. Sinkron antar perangkat. Opsi: tetap lokal, atau simpan to-do di akun (butuh login + backend). Rekomendasi: tunda sampai pemakaian membuktikan perlu.
-3. Hosting HTTPS untuk PWA (belum dipilih).
-4. Uji di HP asli dulu sebelum menambah fitur. Langkah uji: set Kustom 1 menit, mulai fokus, pindah app, cek apakah alarm bunyi.
+3. Hosting: Vercel (diputuskan Riki). Belum dideploy.
+4. Tulis ulang tampilan jadi komponen React? Rekomendasi: tetap dulu (lihat `plan.md` Tahap 6).
+5. Uji di HP asli dulu sebelum menambah fitur. Langkah uji: set Kustom 1 menit, mulai fokus, pindah app, cek apakah alarm bunyi.
 
 ## 8. Tugas yang disarankan (status)
 1. [x] Rapikan prototipe jadi proyek kecil dengan git, tanpa mengubah perilaku.
 2. [x] Tes otomatis untuk alur utama (checklist bagian 9).
 3. [x] Jadikan PWA (manifest + service worker).
 4. [x] Laporkan ke Riki.
-5. [ ] Tunggu keputusan di bagian 7.
+5. [x] Pindah ke Next.js (Tahap 6 di `plan.md`).
+6. [ ] Deploy ke Vercel, uji di HP asli, tunggu keputusan di bagian 7.
 
 ## 9. Checklist penerimaan
 - [x] Alur 6 langkah berulang tanpa error.
